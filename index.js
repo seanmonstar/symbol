@@ -7,6 +7,9 @@ function next() {
 
 
 function Symbol() {
+  if (!(this instanceof Symbol)) {
+    return new Symbol();
+  }
   var _symbol = next();
   this._symbol = _symbol;
   defineProperty(Object.prototype, _symbol, {
