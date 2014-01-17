@@ -1,0 +1,15 @@
+{
+  "name": "symbol",
+  "version": "0.0.0",
+  "description": "ES6 Symbols now.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "symbol",
+    "es6"
+  ],
+  "author": "Sean McArthur <sean.monstar@gmail.com> (http://seanmonstar.com)",
+  "license": "MPLv2.0"
+}
