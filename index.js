@@ -6,16 +6,21 @@ var crypto = require('crypto');
 
 var defineProperty = Object.defineProperty;
 function next() {
-  return "@@symbol:" + crypto.randomBytes(8);
+  return "@@symbol:" + crypto.randomBytes(8).toString('hex');
 }
 
 
-function Symbol() {
+function Symbol(desc) {
   if (!(this instanceof Symbol)) {
-    return new Symbol();
+    return new Symbol(desc);
   }
-  var _symbol = next();
-  this._symbol = _symbol;
+  var _symbol = this._symbol = next();
+  defineProperty(this, '_desc', {
+    value: desc,
+    enumerable: false,
+    writable: false,
+    configurable: false
+  });
   defineProperty(Object.prototype, _symbol, {
     set: function(value) {
       defineProperty(this, _symbol, {
@@ -29,6 +34,24 @@ function Symbol() {
 
 Symbol.prototype.toString = function toString() {
   return this._symbol;
+};
+
+var globalSymbolRegistry = {};
+Symbol.for = function symbolFor(key) {
+  key = String(key);
+  return globalSymbolRegistry[key] || (globalSymbolRegistry[key] = Symbol(key));
+};
+
+Symbol.keyFor = function keyFor(sym) {
+  if (!(sym instanceof Symbol)) {
+    throw new TypeError("Symbol.keyFor requires a Symbol argument");
+  }
+  for (var key in globalSymbolRegistry) {
+    if (globalSymbolRegistry[key] === sym) {
+      return key;
+    }
+  }
+  return undefined;
 };
 
 module.exports = this.Symbol || Symbol;
