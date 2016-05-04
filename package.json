@@ -1,6 +1,6 @@
 {
   "name": "symbol",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "ES6 Symbols in your ES5.",
   "repository": "seanmonstar/symbol",
   "main": "index.js",
