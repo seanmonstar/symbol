@@ -9,29 +9,38 @@ function next() {
 
 
 function Symbol(desc) {
-  if (!(this instanceof Symbol)) {
-    return new Symbol(desc);
+  if (this instanceof Symbol) {
+    throw new TypeError("Symbol is not a constructor");
   }
-  var _symbol = this._symbol = next();
-  defineProperty(this, '_desc', {
-    value: desc,
-    enumerable: false,
-    writable: false,
-    configurable: false
+  var _code = next();
+  var sym = Object.create(Symbol.prototype, {
+    _desc: {
+      value: desc,
+      enumerable: false,
+      writable: false,
+      configurable: false
+    },
+    _code: {
+      value: _code,
+      enumerable: false,
+      writable: false,
+      configurable: false
+    }
   });
-  defineProperty(Object.prototype, _symbol, {
+  defineProperty(Object.prototype, _code, {
     set: function(value) {
-      defineProperty(this, _symbol, {
+      defineProperty(this, _code, {
         value: value,
         enumerable: false,
         writable: true
       });
     }
   });
+  return sym;
 }
 
 Symbol.prototype.toString = function toString() {
-  return this._symbol;
+  return this._code;
 };
 
 var globalSymbolRegistry = {};

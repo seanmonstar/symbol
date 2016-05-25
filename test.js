@@ -5,8 +5,11 @@
 var assert = require('assert');
 var Symbol = require('./');
 
-var s1 = Symbol();
-var s2 = Symbol();
+var s1 = Symbol('test');
+var s2 = Symbol('test');
+
+assert.notEqual(s1, s2, 'Symbol function always returns unique Symbols');
+
 var o = {};
 
 o[s1] = "foo";
@@ -35,4 +38,8 @@ assert.equal(Symbol.keyFor(s6), undefined);
 
 assert.throws(function() {
   Symbol.keyFor('notSymbol');
+});
+
+assert.throws(function() {
+  new Symbol();
 });
