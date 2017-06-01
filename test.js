@@ -2,8 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+process.env.__SYMBOLJS_POLYFILL_FORCE = 1;
+
 var assert = require('assert');
 var Symbol = require('./');
+
+assert.notEqual(global.Symbol, Symbol, 'Test the polyfill');
 
 var s1 = Symbol('test');
 var s2 = Symbol('test');

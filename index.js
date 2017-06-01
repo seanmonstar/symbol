@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+'use strict';
+
 var defineProperty = Object.defineProperty;
 function next() {
   return "@@symbol:" + String(Math.random()).slice(2);
@@ -61,4 +63,8 @@ Symbol.keyFor = function keyFor(sym) {
   return undefined;
 };
 
-module.exports = this.Symbol || Symbol;
+if (process.env.__SYMBOLJS_POLYFILL_FORCE) {
+  module.exports = Symbol;
+} else {
+  module.exports = global.Symbol || Symbol;
+}
